@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snap/pages/pages.dart';
 import 'package:snap/theme/colors.dart';
 import 'package:snap/widgets/nav_item.dart';
 
@@ -12,10 +13,29 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int navIndex = 2;
+  final PageController _pageController = PageController(initialPage: 2);
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: PageView.builder(
+        controller: _pageController,
+        itemCount: pages.length,
+        onPageChanged: (index) {
+          setState(() {
+            navIndex = index;
+          });
+        },
+        itemBuilder: (context, index) {
+          return pages[index];
+        },
+      ),
       bottomSheet: _getBottomSheet(),
     );
   }
@@ -52,6 +72,7 @@ class _RootPageState extends State<RootPage> {
               onTap: () {
                 setState(() {
                   navIndex = index;
+                  _pageController.jumpToPage(navIndex);
                 });
               },
               child: NavItem(
