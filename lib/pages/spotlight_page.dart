@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snap/theme/colors.dart';
+import 'package:snap/theme/text_styles.dart';
+import 'package:snap/widgets/custom_icon_button.dart';
 import 'package:video_player/video_player.dart';
 
 class SpotlightPage extends StatefulWidget {
@@ -45,15 +49,60 @@ class _SpotlightPageState extends State<SpotlightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _videoPlayerController!.value.isInitialized
-          ? Center(
-              child: AspectRatio(
-                  aspectRatio: _videoPlayerController!.value.aspectRatio,
-                  child: VideoPlayer(_videoPlayerController!)),
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
+      backgroundColor: Colors.black,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 30.h,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomIconButton(
+                  child: Image.asset('assets/boy.png'),
+                ),
+                Text(
+                  'Spotlight',
+                  style: kPageTitleTextStyle.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+                CustomIconButton(
+                  child: Icon(
+                    Icons.search_rounded,
+                    size: 24.h,
+                    color: kIconColor,
+                  ),
+                ),
+              ],
             ),
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          _videoPlayerController!.value.isInitialized
+              ? Center(
+                  child: AspectRatio(
+                      aspectRatio: _videoPlayerController!.value.aspectRatio,
+                      child: VideoPlayer(_videoPlayerController!)),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - 200.h,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                ),
+        ],
+      ),
     );
   }
 }
