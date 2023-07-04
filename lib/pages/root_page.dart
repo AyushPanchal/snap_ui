@@ -24,7 +24,7 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,

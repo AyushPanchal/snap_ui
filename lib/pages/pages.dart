@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snap/pages/camera_page.dart';
 import 'package:snap/pages/chats_page.dart';
 import 'package:snap/pages/map_page.dart';
-import 'package:snap/pages/play_page.dart';
+import 'package:snap/pages/spotlight_page.dart';
 import 'package:snap/pages/story_page.dart';
 
 List<Widget> pages = [
@@ -10,5 +10,5 @@ List<Widget> pages = [
   const ChatsPage(),
   const CameraPage(),
   StoryPage(),
-  const PlayPage(),
+  const SpotlightPage(),
 ];
