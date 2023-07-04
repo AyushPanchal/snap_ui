@@ -17,8 +17,8 @@ class StoryPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _getAppBar(),
               _getBody(),
@@ -85,71 +85,106 @@ class StoryPage extends StatelessWidget {
 
   Widget _getBody() {
     return Container(
-      height: size!.height + 140.h,
+      height: double.maxFinite,
       padding: EdgeInsets.symmetric(horizontal: 10.h),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
             height: 5.h,
           ),
-          Text(
-            "Friends",
-            style: kTitleTextStyle,
-          ),
+          //Friends Bar
           SizedBox(
-            height: 5.h,
-          ),
-          SizedBox(
-            height: 120.h,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: userList.length,
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  width: 65.h,
-                  child: Column(
-                    children: [
-                      _getFriends(index),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  width: 10.w,
-                );
-              },
-            ),
-          ),
-          Text(
-            'Discover',
-            style: kTitleTextStyle.copyWith(
-              fontSize: 16.sp,
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
+            height: 135.h,
+            child: ListView(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: discoverList.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.55.h,
-                mainAxisSpacing: 5.h,
-                crossAxisSpacing: 5.h,
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        discoverList[index].imageUrl,
-                      ),
-                    ),
+              children: [
+                Text(
+                  "Friends",
+                  style: kTitleTextStyle,
+                ),
+                SizedBox(
+                  height: 115.h,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: userList.length,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: 65.h,
+                        child: Column(
+                          children: [
+                            _getFriends(index),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        width: 10.w,
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
+            ),
+          ),
+          //Discover Part
+          SizedBox(
+            height: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Discover',
+                  style: kTitleTextStyle.copyWith(
+                    fontSize: 16.sp,
+                  ),
+                ),
+                SizedBox(
+                  height: 370.h,
+                  child: GridView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    itemCount: discoverList.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 0.55.h,
+                      mainAxisSpacing: 5.h,
+                      crossAxisSpacing: 5.h,
+                      crossAxisCount: 2,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black,
+                            ],
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              discoverList[index].imageUrl,
+                            ),
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              bottom: 3.h,
+                              left: 10.w,
+                              child: Text(
+                                discoverList[index].text,
+                                style: kStoryTextStyle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -158,24 +193,22 @@ class StoryPage extends StatelessWidget {
   }
 
   Widget _getFriends(int index) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          FriendButton(
-            index: index,
-          ),
-          Text(
-            userList[index].displayName,
-            style: kFriendDisplayNameTextStyle,
-            overflow: TextOverflow.ellipsis,
-          ),
-          Text(
-            userList[index].username,
-            style: kFriendUserNameTextStyle,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        FriendButton(
+          index: index,
+        ),
+        Text(
+          userList[index].displayName,
+          style: kFriendDisplayNameTextStyle,
+          overflow: TextOverflow.ellipsis,
+        ),
+        Text(
+          userList[index].username,
+          style: kFriendUserNameTextStyle,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
     );
   }
 }

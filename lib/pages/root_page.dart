@@ -24,17 +24,25 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView.builder(
-        controller: _pageController,
-        itemCount: pages.length,
-        onPageChanged: (index) {
-          setState(() {
-            navIndex = index;
-          });
-        },
-        itemBuilder: (context, index) {
-          return pages[index];
-        },
+      body: ListView(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: PageView.builder(
+              controller: _pageController,
+              itemCount: pages.length,
+              onPageChanged: (index) {
+                setState(() {
+                  navIndex = index;
+                });
+              },
+              itemBuilder: (context, index) {
+                return pages[index];
+              },
+            ),
+          ),
+        ],
       ),
       bottomSheet: _getBottomSheet(),
     );

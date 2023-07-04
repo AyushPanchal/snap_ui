@@ -37,7 +37,17 @@ List<DiscoverModel> discoverList = [
   ),
   DiscoverModel(
     imageUrl:
-        'https://images.unsplash.com/photo-1602299536631-0ef7aa1fa70a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDMwfHhIeFlUTUhMZ09jfHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=400&q=60',
-    text: 'Night life',
+        'https://images.unsplash.com/photo-1687971717526-74e4c2dc7efa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60',
+    text: 'Aesthetic Setups',
+  ),
+  DiscoverModel(
+    imageUrl:
+        'https://images.unsplash.com/photo-1675426513824-25a43c3ae0ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzMHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+    text: 'Super Cars',
+  ),
+  DiscoverModel(
+    imageUrl:
+        'https://images.unsplash.com/photo-1688407178509-c8b100f3f2d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+    text: 'Hot Shot',
   ),
 ];

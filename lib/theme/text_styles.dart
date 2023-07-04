@@ -23,3 +23,8 @@ TextStyle kFriendUserNameTextStyle = GoogleFonts.poppins(
   color: kFriendUserNameColor,
   fontSize: 12.sp,
 );
+TextStyle kStoryTextStyle = GoogleFonts.poppins(
+  fontWeight: FontWeight.w700,
+  color: Colors.white,
+  fontSize: 14.sp,
+);
