@@ -5,6 +5,7 @@ import 'package:snap/data/video_model.dart';
 import 'package:snap/theme/colors.dart';
 import 'package:snap/theme/text_styles.dart';
 import 'package:snap/widgets/custom_icon_button.dart';
+import 'package:snap/widgets/nav_item.dart';
 import 'package:video_player/video_player.dart';
 
 class SpotlightPage extends StatefulWidget {
@@ -83,53 +84,45 @@ class _SpotlightPageState extends State<SpotlightPage> {
                       _videoPlayerController!.value.isInitialized
                           ? Stack(
                               children: [
-                                AspectRatio(
-                                  aspectRatio:
-                                      _videoPlayerController!.value.aspectRatio,
-                                  child: VideoPlayer(_videoPlayerController!),
-                                ),
+                                showVideo(),
+                                usernameAndViews(index),
                                 Positioned(
-                                  bottom: 2.h,
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 5.w),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Icon(
-                                              Icons.play_arrow_rounded,
-                                              color: Colors.white,
-                                              size: 15.h,
-                                            ),
-                                            Text(
-                                              '3.5K',
-                                              style: GoogleFonts.poppins(
-                                                color: Colors.white,
-                                                fontSize: 12.sp,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 3.w,
-                                            right: 3.w,
-                                            bottom: 5.h,
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      margin: EdgeInsets.all(
+                                        10.h,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          const SpotlightActionButton(
+                                            icon: Icons.bookmark_add_rounded,
+                                            label: '',
                                           ),
-                                          child: Text(
-                                            videos[index].videoCreator,
-                                            style: kSpotlightUserNameTextStyle,
+                                          SizedBox(
+                                            height: 20.h,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                          SpotlightActionButton(
+                                            icon: Icons.favorite_rounded,
+                                            label: videos[index].likes,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          SpotlightActionButton(
+                                            icon: Icons.messenger_rounded,
+                                            label: videos[index].comments,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          SpotlightActionButton(
+                                            icon: Icons.send_rounded,
+                                            label: videos[index].shares,
+                                          ),
+                                        ],
+                                      ),
+                                    ))
                               ],
                             )
                           : Column(
@@ -160,6 +153,55 @@ class _SpotlightPageState extends State<SpotlightPage> {
     );
   }
 
+  AspectRatio showVideo() {
+    return AspectRatio(
+      aspectRatio: _videoPlayerController!.value.aspectRatio,
+      child: VideoPlayer(_videoPlayerController!),
+    );
+  }
+
+  Positioned usernameAndViews(int index) {
+    return Positioned(
+      bottom: 2.h,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.play_arrow_rounded,
+                  color: Colors.white,
+                  size: 15.h,
+                ),
+                Text(
+                  '3.5K',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 12.sp,
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 3.w,
+                right: 3.w,
+                bottom: 5.h,
+              ),
+              child: Text(
+                videos[index].videoCreator,
+                style: kSpotlightUserNameTextStyle,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void videoHandle(int index) {
     _videoPlayerController = VideoPlayerController.networkUrl(
       Uri.parse(videos[index].videoUrl),
@@ -184,5 +226,36 @@ class _SpotlightPageState extends State<SpotlightPage> {
     _videoPlayerController!.removeListener(_videoPlayerListener!);
     _videoPlayerController!.dispose();
     super.dispose();
+  }
+}
+
+class SpotlightActionButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  const SpotlightActionButton({
+    super.key,
+    required this.icon,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Icon(
+          icon,
+          size: 35.sp,
+          color: Colors.white,
+        ),
+        label.isNotEmpty
+            ? Text(
+                label,
+                style: kFriendDisplayNameTextStyle.copyWith(
+                  color: Colors.white,
+                ),
+              )
+            : const SizedBox(),
+      ],
+    );
   }
 }
