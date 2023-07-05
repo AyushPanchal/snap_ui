@@ -28,3 +28,8 @@ TextStyle kStoryTextStyle = GoogleFonts.poppins(
   color: Colors.white,
   fontSize: 14.sp,
 );
+
+TextStyle kSpotlightUserNameTextStyle = kTitleTextStyle.copyWith(
+  color: Colors.white,
+  fontSize: 16.sp,
+);
