@@ -17,31 +17,53 @@ class ChatsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _appBar(),
+            _switches(),
             Container(
-              margin: EdgeInsets.only(
-                left: 5.w,
-                top: 18.h,
+              height: 49.h,
+              margin: EdgeInsets.only(top: 10.h),
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                border: Border(
+                  top: BorderSide(
+                    color: kSwitchBGColor,
+                  ),
+                  bottom: BorderSide(
+                    color: kSwitchBGColor,
+                  ),
+                ),
               ),
-              height: 28.h,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: switchIcons.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 3.w),
-                      child: CustomSwitch(
-                        child: Icon(
-                          switchIcons[index],
-                          size: 20.sp,
-                          color: kIconColor,
-                        ),
-                      ),
-                    );
-                  }),
-            )
+              child: Row(
+                children: [Row(), Row()],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Container _switches() {
+    return Container(
+      margin: EdgeInsets.only(
+        left: 5.w,
+        top: 18.h,
+      ),
+      height: 28.h,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: switchIcons.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.w),
+              child: CustomSwitch(
+                child: Icon(
+                  switchIcons[index],
+                  size: 20.sp,
+                  color: kIconColor,
+                ),
+              ),
+            );
+          }),
     );
   }
 
