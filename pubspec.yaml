@@ -39,6 +39,7 @@ dependencies:
   flutter_feather_icons: ^2.0.0+1
   google_fonts:
   video_player: ^2.7.0
+  font_awesome_flutter:
 
 dev_dependencies:
   flutter_test:
