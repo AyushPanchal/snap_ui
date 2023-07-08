@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:snap/data/chat_model.dart';
 import 'package:snap/theme/colors.dart';
 import 'package:snap/widgets/custom_icon_button.dart';
 
@@ -18,23 +20,137 @@ class ChatsPage extends StatelessWidget {
           children: [
             _appBar(),
             _switches(),
-            Container(
-              height: 49.h,
-              margin: EdgeInsets.only(top: 10.h),
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-                border: Border(
-                  top: BorderSide(
-                    color: kSwitchBGColor,
-                  ),
-                  bottom: BorderSide(
-                    color: kSwitchBGColor,
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [Row(), Row()],
-              ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: chatList.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 49.h,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8.w,
+                      ),
+                      margin: index == 0
+                          ? EdgeInsets.only(top: 10.h)
+                          : EdgeInsets.zero,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border(
+                          top: index == 0
+                              ? const BorderSide(
+                                  color: kSwitchBGColor,
+                                )
+                              : BorderSide.none,
+                          bottom: const BorderSide(
+                            color: kSwitchBGColor,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 50.w,
+                                height: 40.w,
+                                child: CustomIconButton(
+                                  child: chatList[index].gender == Gender.male
+                                      ? Image.asset(
+                                          'assets/boy.png',
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          'assets/girl.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '${chatList[index].name}',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 13.h,
+                                    ),
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        chatList[index].icon,
+                                        color: chatList[index].iconColor,
+                                        size: 13.h,
+                                      ),
+                                      SizedBox(
+                                        width: 2.5.w,
+                                      ),
+                                      Text(
+                                        '${chatList[index].statusString}',
+                                        style: kSmallGrayTextStyle,
+                                      ),
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      Container(
+                                        height: 2.h,
+                                        width: 2.h,
+                                        decoration: BoxDecoration(
+                                          color: kIconColor.withOpacity(
+                                            0.4,
+                                          ),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      Text(
+                                        '${chatList[index].time}',
+                                        style: kSmallGrayTextStyle,
+                                      ),
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      Container(
+                                        height: 2.h,
+                                        width: 2.h,
+                                        decoration: BoxDecoration(
+                                          color: kIconColor.withOpacity(
+                                            0.4,
+                                          ),
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.w,
+                                      ),
+                                      Text(
+                                        '${chatList[index].streakCount} 🔥',
+                                        style: kSmallGrayTextStyle.copyWith(
+                                            color: Colors.black,
+                                            fontSize: 10.h),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Icon(
+                            CupertinoIcons.photo_camera,
+                            size: 22.h,
+                            color: kIconColor,
+                          )
+                        ],
+                      ),
+                    );
+                  }),
             ),
           ],
         ),

@@ -33,3 +33,10 @@ TextStyle kSpotlightUserNameTextStyle = kTitleTextStyle.copyWith(
   color: Colors.white,
   fontSize: 16.sp,
 );
+
+TextStyle kSmallGrayTextStyle = GoogleFonts.poppins(
+  color: kIconColor.withOpacity(
+    0.4,
+  ),
+  fontSize: 10.h,
+);

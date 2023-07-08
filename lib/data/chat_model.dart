@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../theme/colors.dart';
+import '../theme/my_icons.dart';
 
 enum Status {
   receivedSnap,
@@ -13,6 +15,11 @@ enum Status {
   sentMessageOpened,
 }
 
+enum Gender {
+  male,
+  female,
+}
+
 class ChatModel {
   String? name;
   IconData? icon;
@@ -20,47 +27,52 @@ class ChatModel {
   String? time;
   Color? iconColor;
   Status? status;
+  Gender? gender;
+  String? statusString;
   ChatModel({
     this.name,
     this.streakCount,
     this.time,
     this.status,
+    this.gender = Gender.male,
   }) {
-    const kPinkIconColor = Color(0XFFEA3C53);
-    const kBlueIconColor = Color(0xff37ADDF);
-    IconData kUnfilledPaperPlane = CupertinoIcons.paperplane;
-    IconData kFilledPaperPlane = CupertinoIcons.paperplane_fill;
-    IconData kReceivedMessageSeenIcon = Icons.mode_comment_outlined;
-    IconData kReceivedSnapOpened = CupertinoIcons.square;
-    IconData kReceivedSnapUnOpened = CupertinoIcons.square_fill;
     switch (status) {
       case Status.openedMessage:
         iconColor = kBlueIconColor;
         icon = kUnfilledPaperPlane;
+        statusString = 'Opened';
       case Status.openedSnap:
         iconColor = kPinkIconColor;
         icon = kReceivedSnapOpened;
+        statusString = 'Double tap to reply';
       case Status.sentSnap:
         iconColor = kPinkIconColor;
         icon = kFilledPaperPlane;
+        statusString = 'Sent';
       case Status.sentMessage:
         iconColor = kBlueIconColor;
         icon = kFilledPaperPlane;
+        statusString = 'Sent';
       case Status.receivedMessageOpened:
         iconColor = kBlueIconColor;
         icon = kReceivedMessageSeenIcon;
+        statusString = 'Received';
       case Status.receivedMessage:
         iconColor = kBlueIconColor;
         icon = kFilledPaperPlane;
+        statusString = 'New Chat';
       case Status.sentMessageOpened:
         iconColor = kBlueIconColor;
         icon = kUnfilledPaperPlane;
+        statusString = 'Opened';
       case Status.sentSnapOpened:
         iconColor = kBlueIconColor;
         icon = kUnfilledPaperPlane;
+        statusString = 'Opened';
       case Status.receivedSnap:
         icon = kReceivedSnapUnOpened;
         iconColor = kPinkIconColor;
+        statusString = 'New Snap';
       default:
         iconColor = Colors.transparent;
     }
@@ -91,24 +103,28 @@ List<ChatModel> chatList = [
     status: Status.receivedMessage,
     streakCount: 864,
     time: '12h',
+    gender: Gender.female,
   ),
   ChatModel(
     name: "Disha Patel",
     status: Status.receivedMessageOpened,
     streakCount: 100,
     time: '12m',
+    gender: Gender.female,
   ),
   ChatModel(
     name: "Aditi Patel",
     status: Status.sentSnap,
     streakCount: 180,
     time: '2s',
+    gender: Gender.female,
   ),
   ChatModel(
     name: "Janvi Patel",
     status: Status.sentSnapOpened,
     streakCount: 596,
     time: '5h',
+    gender: Gender.female,
   ),
   ChatModel(
     name: "Babu RB",
