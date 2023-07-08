@@ -48,7 +48,7 @@ class ChatModel {
       case Status.sentSnap:
         iconColor = kPinkIconColor;
         icon = kFilledPaperPlane;
-        statusString = 'Sent';
+        statusString = 'Delivered';
       case Status.sentMessage:
         iconColor = kBlueIconColor;
         icon = kFilledPaperPlane;
@@ -66,7 +66,7 @@ class ChatModel {
         icon = kUnfilledPaperPlane;
         statusString = 'Opened';
       case Status.sentSnapOpened:
-        iconColor = kBlueIconColor;
+        iconColor = kPinkIconColor;
         icon = kUnfilledPaperPlane;
         statusString = 'Opened';
       case Status.receivedSnap:
@@ -137,5 +137,19 @@ List<ChatModel> chatList = [
     status: Status.sentMessageOpened,
     streakCount: 212,
     time: '19m',
+  ),
+  ChatModel(
+    name: "Maggie Prajapati",
+    status: Status.sentSnapOpened,
+    streakCount: 412,
+    time: '20s',
+    gender: Gender.female,
+  ),
+  ChatModel(
+    name: "Nisha Ahir",
+    status: Status.sentSnap,
+    streakCount: 269,
+    time: '20m',
+    gender: Gender.female,
   ),
 ];

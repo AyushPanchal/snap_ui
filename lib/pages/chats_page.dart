@@ -9,27 +9,34 @@ import 'package:snap/widgets/custom_icon_button.dart';
 import '../theme/text_styles.dart';
 
 class ChatsPage extends StatelessWidget {
-  const ChatsPage({super.key});
+  ChatsPage({super.key});
+
+  BuildContext? _context;
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _appBar(),
-            _switches(),
-            _chats(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _appBar(),
+              _switches(),
+              _chats(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Expanded _chats() {
-    return Expanded(
+  SizedBox _chats() {
+    return SizedBox(
+      height: MediaQuery.of(_context!).size.height - 183.h,
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: chatList.length,
         itemBuilder: (context, index) {
           return Container(
