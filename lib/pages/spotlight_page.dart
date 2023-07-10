@@ -8,6 +8,8 @@ import 'package:snap/widgets/custom_icon_button.dart';
 import 'package:snap/widgets/nav_item.dart';
 import 'package:video_player/video_player.dart';
 
+import '../widgets/spotlight_action_button.dart';
+
 class SpotlightPage extends StatefulWidget {
   const SpotlightPage({super.key});
 
@@ -44,110 +46,117 @@ class _SpotlightPageState extends State<SpotlightPage> {
           SizedBox(
             height: 30.h,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          _appBar(),
+          _spotlight(context),
+        ],
+      ),
+    );
+  }
+
+  Expanded _spotlight(BuildContext context) {
+    return Expanded(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: PageView.builder(
+          controller: pageController,
+          scrollDirection: Axis.vertical,
+          itemCount: videos.length,
+          itemBuilder: (context, index) {
+            return Column(
               children: [
-                CustomIconButton(
-                  child: Image.asset('assets/boy.png'),
+                SizedBox(
+                  height: 5.h,
                 ),
-                Text(
-                  'Spotlight',
-                  style: kPageTitleTextStyle.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-                CustomIconButton(
-                  child: Icon(
-                    Icons.search_rounded,
-                    size: 24.h,
-                    color: kIconColor,
-                  ),
-                ),
+                _videoPlayerController!.value.isInitialized
+                    ? Stack(
+                        children: [
+                          showVideo(),
+                          usernameAndViews(index),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: Container(
+                                margin: EdgeInsets.all(
+                                  10.h,
+                                ),
+                                child: Column(
+                                  children: [
+                                    const SpotlightActionButton(
+                                      icon: Icons.bookmark_add_rounded,
+                                      label: '',
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    SpotlightActionButton(
+                                      icon: Icons.favorite_rounded,
+                                      label: videos[index].likes,
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    SpotlightActionButton(
+                                      icon: Icons.messenger_rounded,
+                                      label: videos[index].comments,
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    SpotlightActionButton(
+                                      icon: Icons.send_rounded,
+                                      label: videos[index].shares,
+                                    ),
+                                  ],
+                                ),
+                              ))
+                        ],
+                      )
+                    : Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height - 200.h,
+                            child: const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        ],
+                      ),
               ],
+            );
+          },
+          onPageChanged: (index) {
+            _videoPlayerController!.dispose();
+            videoHandle(index);
+          },
+        ),
+      ),
+    );
+  }
+
+  Container _appBar() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomIconButton(
+            child: Image.asset('assets/boy.png'),
+          ),
+          Text(
+            'Spotlight',
+            style: kPageTitleTextStyle.copyWith(
+              color: Colors.white,
             ),
           ),
-          Expanded(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: PageView.builder(
-                controller: pageController,
-                scrollDirection: Axis.vertical,
-                itemCount: videos.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      _videoPlayerController!.value.isInitialized
-                          ? Stack(
-                              children: [
-                                showVideo(),
-                                usernameAndViews(index),
-                                Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: Container(
-                                      margin: EdgeInsets.all(
-                                        10.h,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          const SpotlightActionButton(
-                                            icon: Icons.bookmark_add_rounded,
-                                            label: '',
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          SpotlightActionButton(
-                                            icon: Icons.favorite_rounded,
-                                            label: videos[index].likes,
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          SpotlightActionButton(
-                                            icon: Icons.messenger_rounded,
-                                            label: videos[index].comments,
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                          SpotlightActionButton(
-                                            icon: Icons.send_rounded,
-                                            label: videos[index].shares,
-                                          ),
-                                        ],
-                                      ),
-                                    ))
-                              ],
-                            )
-                          : Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height -
-                                      200.h,
-                                  child: const Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ],
-                  );
-                },
-                onPageChanged: (index) {
-                  _videoPlayerController!.dispose();
-                  videoHandle(index);
-                },
-              ),
+          CustomIconButton(
+            child: Icon(
+              Icons.search_rounded,
+              size: 24.h,
+              color: kIconColor,
             ),
-          )
+          ),
         ],
       ),
     );
@@ -226,36 +235,5 @@ class _SpotlightPageState extends State<SpotlightPage> {
     _videoPlayerController!.removeListener(_videoPlayerListener!);
     _videoPlayerController!.dispose();
     super.dispose();
-  }
-}
-
-class SpotlightActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  const SpotlightActionButton({
-    super.key,
-    required this.icon,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          size: 35.sp,
-          color: Colors.white,
-        ),
-        label.isNotEmpty
-            ? Text(
-                label,
-                style: kFriendDisplayNameTextStyle.copyWith(
-                  color: Colors.white,
-                ),
-              )
-            : const SizedBox(),
-      ],
-    );
   }
 }

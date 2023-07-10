@@ -8,11 +8,20 @@ import 'package:snap/theme/colors.dart';
 import 'package:snap/widgets/custom_icon_button.dart';
 
 import '../theme/text_styles.dart';
+import '../widgets/custom_switch.dart';
 
 class ChatsPage extends StatelessWidget {
   ChatsPage({super.key});
 
   BuildContext? _context;
+
+  List<IconData> switchIcons = [
+    Icons.chat_rounded,
+    CupertinoIcons.chat_bubble_2_fill,
+    Icons.groups_rounded,
+    Icons.emoji_emotions_rounded,
+    CupertinoIcons.plus,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -266,36 +275,3 @@ class ChatsPage extends StatelessWidget {
     );
   }
 }
-
-class CustomSwitch extends StatelessWidget {
-  final Widget child;
-  const CustomSwitch({
-    super.key,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 15.w,
-        vertical: 3.h,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-          18.r,
-        ),
-        color: kSwitchBGColor,
-      ),
-      child: child,
-    );
-  }
-}
-
-List<IconData> switchIcons = [
-  Icons.chat_rounded,
-  CupertinoIcons.chat_bubble_2_fill,
-  Icons.groups_rounded,
-  Icons.emoji_emotions_rounded,
-  CupertinoIcons.plus,
-];
