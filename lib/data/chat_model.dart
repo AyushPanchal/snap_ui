@@ -81,7 +81,7 @@ class ChatModel {
 
 List<ChatModel> chatList = [
   ChatModel(
-    name: "Harsh patel",
+    name: "MF🤺",
     status: Status.receivedSnap,
     streakCount: 1000,
     time: '2h',

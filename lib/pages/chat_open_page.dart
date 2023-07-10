@@ -1,21 +1,148 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:snap/theme/colors.dart';
+import 'package:snap/theme/my_icons.dart';
 import 'package:snap/theme/text_styles.dart';
+import 'package:snap/widgets/custom_icon_button.dart';
 
 class ChatOpenPage extends StatelessWidget {
   final String name;
   final Widget image;
-  const ChatOpenPage({super.key, required this.name, required this.image});
+  const ChatOpenPage({
+    super.key,
+    required this.name,
+    required this.image,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: [
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
             _appBar(),
+            _time(),
+            _snaps(),
           ],
+        ),
+      ),
+      bottomSheet: _bottomSheet(),
+    );
+  }
+
+  SafeArea _bottomSheet() {
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: kGrayBGColor,
+            ),
+          ),
+        ),
+        height: 45.h,
+        child: Row(
+          children: [
+            const CustomIconButton(
+              child: Icon(
+                CupertinoIcons.camera,
+                color: kIconColor,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 10.w,
+                  vertical: 5.h,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    cursorColor: kPinkIconColor,
+                    cursorHeight: 15.h,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 15.w,
+                        vertical: 8.h,
+                      ),
+                      hintText: "Send a Chat",
+                      hintStyle: GoogleFonts.poppins(
+                        color: kIconColor.withOpacity(0.5),
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.mic,
+                        color: kIconColor,
+                      ),
+                      filled: true,
+                      border: InputBorder.none,
+                      fillColor: kGrayBGColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Icon(
+              CupertinoIcons.smiley,
+              size: 22.h,
+              color: kIconColor,
+            ),
+            SizedBox(
+              width: 5.w,
+            ),
+            Icon(
+              Icons.photo_library_rounded,
+              size: 22.h,
+              color: kIconColor,
+            ),
+            SizedBox(
+              width: 5.w,
+            ),
+            Icon(
+              CupertinoIcons.add_circled,
+              size: 22.h,
+              color: kIconColor,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column _snaps() {
+    return Column(
+      children: [
+        SnapInChat(
+          name: name,
+          icon: CupertinoIcons.square,
+          snapMessage: 'Opened',
+          lineColor: kBlueIconColor,
+        ),
+        SnapInChat(
+          name: 'ME',
+          icon: kFilledPaperPlane,
+          snapMessage: 'Sent',
+          lineColor: kPinkIconColor,
+        ),
+      ],
+    );
+  }
+
+  Padding _time() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 3.h),
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          "TODAY",
+          style: GoogleFonts.inter(
+            fontSize: 10.sp,
+            color: kIconColor,
+          ),
         ),
       ),
     );
@@ -28,6 +155,16 @@ class ChatOpenPage extends StatelessWidget {
         left: 10.w,
         right: 10.w,
       ),
+      padding: EdgeInsets.only(
+        bottom: 10.h,
+      ),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: kGrayBGColor,
+          ),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -35,7 +172,7 @@ class ChatOpenPage extends StatelessWidget {
             children: [
               image,
               SizedBox(
-                width: 10.w,
+                width: 1.w,
               ),
               Text(
                 name,
@@ -43,6 +180,7 @@ class ChatOpenPage extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                   fontSize: 18.sp,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -96,6 +234,94 @@ class ChatOpenPage extends StatelessWidget {
               )
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class SnapInChat extends StatelessWidget {
+  const SnapInChat({
+    super.key,
+    required this.name,
+    required this.icon,
+    required this.snapMessage,
+    required this.lineColor,
+  });
+
+  final String name;
+  final IconData icon;
+  final Color lineColor;
+  final String snapMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 5.w,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: GoogleFonts.inter(
+              fontSize: 12.sp,
+              color: lineColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(
+            height: 2.h,
+          ),
+          Row(
+            children: [
+              Container(
+                height: 45.h,
+                width: 2.w,
+                color: lineColor,
+              ),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.all(
+                    3.h,
+                  ),
+                  padding: EdgeInsets.only(
+                    left: 18.w,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: kIconColor.withOpacity(
+                        0.3,
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      5.r,
+                    ),
+                  ),
+                  height: 45.h,
+                  child: Row(
+                    children: [
+                      Icon(
+                        icon,
+                        color: kPinkIconColor,
+                      ),
+                      SizedBox(
+                        width: 18.w,
+                      ),
+                      Text(
+                        snapMessage,
+                        style: GoogleFonts.poppins(
+                          fontSize: 16.sp,
+                          color: kIconColor,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
