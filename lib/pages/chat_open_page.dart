@@ -49,8 +49,8 @@ class ChatOpenPage extends StatelessWidget {
         height: 45.h,
         child: Row(
           children: [
-            const CustomIconButton(
-              child: Icon(
+            CustomIconButton(
+              child: const Icon(
                 CupertinoIcons.camera,
                 color: kIconColor,
               ),

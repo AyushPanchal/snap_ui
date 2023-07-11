@@ -5,17 +5,16 @@ import '../theme/colors.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Widget child;
-  const CustomIconButton({
-    super.key,
-    required this.child,
-  });
+  Color? iconBGColor;
+  CustomIconButton(
+      {super.key, required this.child, this.iconBGColor = kGrayBGColor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 35.h,
-      decoration: const BoxDecoration(
-        color: kGrayBGColor,
+      decoration: BoxDecoration(
+        color: iconBGColor,
         shape: BoxShape.circle,
       ),
       padding: child is Icon

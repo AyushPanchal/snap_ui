@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:snap/main.dart';
+import 'package:snap/theme/my_icons.dart';
+import 'package:snap/widgets/custom_icon_button.dart';
 
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
@@ -45,9 +47,30 @@ class _CameraPageState extends State<CameraPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: double.maxFinite,
-          child: CameraPreview(_cameraController),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.black,
+                child: Row(
+                  children: [
+                    CustomIconButton(
+                      iconBGColor: Colors.transparent,
+                      child: Image.asset(
+                        'assets/boy.png',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: CameraPreview(
+                  _cameraController,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
