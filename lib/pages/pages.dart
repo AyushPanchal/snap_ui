@@ -8,7 +8,7 @@ import 'package:snap/pages/story_page.dart';
 List<Widget> pages = [
   const MapPage(),
   ChatsPage(),
-  const CameraPage(),
+  CameraPage(),
   StoryPage(),
   const SpotlightPage(),
 ];

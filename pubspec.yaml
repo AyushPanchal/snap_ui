@@ -40,6 +40,7 @@ dependencies:
   google_fonts:
   video_player: ^2.7.0
   font_awesome_flutter:
+  camera: ^0.10.5+2
 
 dev_dependencies:
   flutter_test:

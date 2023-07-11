@@ -5,7 +5,6 @@ import 'package:snap/data/video_model.dart';
 import 'package:snap/theme/colors.dart';
 import 'package:snap/theme/text_styles.dart';
 import 'package:snap/widgets/custom_icon_button.dart';
-import 'package:snap/widgets/nav_item.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/spotlight_action_button.dart';
